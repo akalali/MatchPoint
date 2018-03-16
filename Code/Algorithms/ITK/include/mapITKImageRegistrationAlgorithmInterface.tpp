@@ -12,14 +12,6 @@
 // PURPOSE.  See the above copyright notices for more information.
 //
 //------------------------------------------------------------------------
-/*!
-// @file
-// @version $Revision$ (last changed revision)
-// @date    $Date$ (last change date)
-// @author  $Author$ (last changed by)
-// Subversion HeadURL: $HeadURL$
-*/
-
 
 #ifndef __ITK_IMAGE_REGISTRATION_ALGORITHM_INTERFACE_TPP
 #define __ITK_IMAGE_REGISTRATION_ALGORITHM_INTERFACE_TPP
@@ -31,8 +23,6 @@ namespace map
 		namespace itk
 		{
 
-			// **** protected methods ****
-			// ***************************
 			template<class TMovingImage, class TTargetImage, class TTransformScalar, class TInterpolatorCoordRep>
 			ITKImageRegistrationAlgorithmInterface<TMovingImage, TTargetImage, TTransformScalar, TInterpolatorCoordRep>::
 			ITKImageRegistrationAlgorithmInterface()
