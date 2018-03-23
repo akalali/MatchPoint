@@ -22,9 +22,6 @@ include/mapAlgorithmStateChangeEvent.h
 include/mapAlgorithmWrapperEvent.h
 include/mapAlgorithmProfileHelper.h
 include/mapAnalyticAlgorithmInterface.h
-include/mapArbitraryImagePyramidesPolicy.h
-include/mapImagePyramidesGetterInterface.h
-include/mapImagePyramidesSetterInterface.h
 include/mapImageRegistrationAlgorithmBase.h
 include/mapImageRegistrationAlgorithmInterface.h
 include/mapImageRegistrationAlgorithmInterfaceV2.h
@@ -51,7 +48,6 @@ include/mapPointSetRegistrationAlgorithmInterfaceV2.h
 include/mapRegistrationAlgorithm.h
 include/mapRegistrationAlgorithmBase.h
 include/mapRegistrationAlgorithmInterface.h
-include/mapSealedImagePyramidesPolicy.h
 include/mapStoppableAlgorithmInterface.h
 include/mapUID.h
 include/mapMaskBoundingBoxHelper.h
@@ -67,10 +63,6 @@ include/mapMultiResImageRegistrationAlgorithmBase.tpp
 include/mapModifiableMultiResImageRegistrationAlgorithmBase.tpp
 include/mapRegistrationAlgorithm.tpp
 include/mapIterativeRegistrationAlgorithm.tpp
-include/mapArbitraryImagePyramidesPolicy.tpp
-include/mapSealedImagePyramidesPolicy.tpp
-include/mapImagePyramidesSetterInterface.tpp
-include/mapImagePyramidesGetterInterface.tpp
 boxed/mapDummyRegistrationAlgorithm.tpp
 boxed/mapDummyImageRegistrationAlgorithm.tpp
 )
