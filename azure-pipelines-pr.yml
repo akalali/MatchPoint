@@ -82,7 +82,7 @@ jobs:
   - task: CMake@1
     displayName: 'Configure MatchPoint for $(BuildType)'
     inputs:
-      cmakeArgs: '..  -G"$(Makefiles)" -DITK_DIR:PATH=$(Agent.BuildDirectory)\ITK-build -DBUILD_TESTING:BOOL=OFF -DCMAKE_BUILD_TYPE:STRING=$(BuildType)'
+      cmakeArgs: '..  -G"$(Makefiles)" -DITK_DIR:PATH=$(Agent.BuildDirectory)/ITK-build -DBUILD_TESTING:BOOL=OFF -DCMAKE_BUILD_TYPE:STRING=$(BuildType)'
 
   - task: CMake@1
     displayName: 'Build MatchPoint for $(BuildType)'
@@ -127,4 +127,4 @@ jobs:
   - task: CMake@1
     displayName: 'Build MatchPoint for $(BuildType)'
     inputs:
-      cmakeArgs: '--build . $(BuildType) . $(JFlag)'
+      cmakeArgs: '--build . $(JFlag)'
