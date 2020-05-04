@@ -1,0 +1,129 @@
+trigger:
+- master
+
+variables:
+  ITKGitTag: v4.13.2
+  JFlag: '-j 8'
+  Makefiles: Unix Makefiles
+  VisualStudio: Visual Studio 15 2017 Win64
+
+jobs:
+# WINDOWS JOB DEFINITION
+- job:
+  displayName: Windows
+  pool:
+    vmImage: 'vs2017-win2016 '
+  strategy:
+    matrix:
+      64-bit Debug:
+        BuildType: Debug
+      64-bit Release:
+        BuildType: Release
+
+  steps:
+  - script: |
+      git clone --depth 1 --branch $(ITKGitTag) https://github.com/InsightSoftwareConsortium/ITK.git
+      mkdir ITK-build
+    workingDirectory: $(Agent.BuildDirectory)
+    displayName: 'Git clone ITK'
+
+  - task: CMake@1
+    displayName: 'Configure ITK for $(BuildType)'
+    inputs:
+      workingDirectory: '$(Agent.BuildDirectory)\ITK-build'
+      cmakeArgs: '..\ITK -G"$(VisualStudio)" -DBUILD_SHARED_LIBS:BOOL=ON -DBUILD_TESTING:BOOL=OFF'
+
+  - task: CMake@1
+    displayName: 'Build ITK for $(BuildType)'
+    inputs:
+      cmakeArgs: '--build $(Agent.BuildDirectory)\ITK-build --config $(BuildType)'
+
+  - task: CMake@1
+    displayName: 'Configure MatchPoint for $(BuildType)'
+    inputs:
+      cmakeArgs: '.. -G"$(VisualStudio)" -DITK_DIR:PATH=$(Agent.BuildDirectory)\ITK-build -DBUILD_TESTING:BOOL=OFF'
+
+  - task: CMake@1
+    displayName: 'Build MatchPoint for $(BuildType)'
+    inputs:
+      cmakeArgs: '--build . --config $(BuildType)'
+
+# MACOS JOB DEFINITION
+- job:
+  displayName: macOS
+  pool:
+    vmImage: 'macOS-10.13'
+  strategy:
+    matrix:
+      Debug:
+        BuildType: Debug
+      Release:
+        BuildType: Release
+
+  steps:
+  - script: |
+      git clone --depth 1 --branch $(ITKGitTag) https://github.com/InsightSoftwareConsortium/ITK.git
+      mkdir ITK-build
+    workingDirectory: $(Agent.BuildDirectory)
+    displayName: 'Git clone ITK'
+
+  - task: CMake@1
+    displayName: 'Configure ITK for $(BuildType)'
+    inputs:
+      workingDirectory: '$(Agent.BuildDirectory)/ITK-build'
+      cmakeArgs: '../ITK -G"$(Makefiles)" -DBUILD_SHARED_LIBS:BOOL=ON -DBUILD_TESTING:BOOL=OFF -DCMAKE_BUILD_TYPE:STRING=$(BuildType)'
+
+  - task: CMake@1
+    displayName: 'Build ITK for $(BuildType)'
+    inputs:
+      cmakeArgs: '--build $(Agent.BuildDirectory)/ITK-build $(JFlag)'
+
+  - task: CMake@1
+    displayName: 'Configure MatchPoint for $(BuildType)'
+    inputs:
+      cmakeArgs: '..  -G"$(Makefiles)" -DITK_DIR:PATH=$(Agent.BuildDirectory)/ITK-build -DBUILD_TESTING:BOOL=OFF -DCMAKE_BUILD_TYPE:STRING=$(BuildType)'
+
+  - task: CMake@1
+    displayName: 'Build MatchPoint for $(BuildType)'
+    inputs:
+      cmakeArgs: '--build . $(JFlag)'
+
+# LINUX JOB DEFINITION
+- job:
+  displayName: Ubuntu
+  pool:
+    vmImage: 'ubuntu-18.04'
+  strategy:
+    matrix:
+      Debug:
+        BuildType: Debug
+      Release:
+        BuildType: Release
+
+  steps:
+  - script: |
+      git clone --depth 1 --branch $(ITKGitTag) https://github.com/InsightSoftwareConsortium/ITK.git
+      mkdir ITK-build
+    workingDirectory: $(Agent.BuildDirectory)
+    displayName: 'Git clone ITK'
+
+  - task: CMake@1
+    displayName: 'Configure ITK for $(BuildType)'
+    inputs:
+      workingDirectory: '$(Agent.BuildDirectory)/ITK-build'
+      cmakeArgs: '../ITK -G"$(Makefiles)" -DBUILD_SHARED_LIBS:BOOL=ON -DBUILD_TESTING:BOOL=OFF -DCMAKE_BUILD_TYPE:STRING=$(BuildType)'
+
+  - task: CMake@1
+    displayName: 'Build ITK for $(BuildType)'
+    inputs:
+      cmakeArgs: '--build $(Agent.BuildDirectory)/ITK-build $(JFlag)' 
+
+  - task: CMake@1
+    displayName: 'Configure MatchPoint for $(BuildType)'
+    inputs:
+      cmakeArgs: '..  -G"$(Makefiles)" -DITK_DIR:PATH=$(Agent.BuildDirectory)/ITK-build -DBUILD_TESTING:BOOL=OFF -DCMAKE_BUILD_TYPE:STRING=$(BuildType)'
+
+  - task: CMake@1
+    displayName: 'Build MatchPoint for $(BuildType)'
+    inputs:
+      cmakeArgs: '--build . $(JFlag)'
