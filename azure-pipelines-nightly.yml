@@ -16,6 +16,7 @@ jobs:
 # WINDOWS JOB DEFINITION
 - job:
   displayName: Windows
+  timeoutInMinutes: 0
   pool:
     vmImage: 'vs2017-win2016 '
   strategy:
@@ -59,6 +60,7 @@ jobs:
 # MACOS JOB DEFINITION
 - job:
   displayName: macOS
+  timeoutInMinutes: 0
   pool:
     vmImage: 'macOS-10.14'
   strategy:
@@ -99,6 +101,7 @@ jobs:
 # LINUX JOB DEFINITION
 - job:
   displayName: Ubuntu
+  timeoutInMinutes: 0
   pool:
     vmImage: 'ubuntu-18.04'
   strategy:
